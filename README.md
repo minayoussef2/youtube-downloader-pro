@@ -29,4 +29,4 @@ A professional, fully-featured desktop application for downloading YouTube video
    ```
 
 ## Building for Windows
-Follow the instructions in `INSTALLER_GUIDE.md` to create a standalone EXE and a professional installer.
+You need to Download ffmpeg (https://ffmpeg.org/download.html)
