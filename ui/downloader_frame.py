@@ -61,25 +61,29 @@ class ItemDownloader:
         self.is_paused    = False
         self._pause_event.set()
 
-        original_hook = ydl_opts.get("progress_hooks", [None])[0]
+        original_hooks = [h for h in ydl_opts.get("progress_hooks", []) if h]
 
         def hook(d):
-            self._pause_event.wait()            # blocks here while paused
+            self._pause_event.wait()
             if self.is_cancelled:
                 raise Exception("cancelled by user")
-            if original_hook:
-                original_hook(d)
-
-        ydl_opts = {**ydl_opts, "progress_hooks": [hook]}
+            for h in original_hooks:
+                h(d)
+        
+        merged = {**ydl_opts, "progress_hooks": [hook]}
         try:
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            with yt_dlp.YoutubeDL(merged) as ydl:
                 ydl.download([url])
             return True
         except Exception as e:
-            err = str(e).lower()
-            if "cancelled" in err:
+            err = str(e)
+            if "cancelled by user" in err.lower():
                 return "cancelled"
-            return str(e)
+            for prefix in ("ERROR: ", "yt_dlp.utils.DownloadError: ERROR: "):
+                if err.startswith(prefix):
+                    err = err[len(prefix):]
+                    break
+            return err
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -343,6 +347,12 @@ class YTQueueItem(ctk.CTkFrame):
             "progress_hooks": [progress_hook],
             "quiet": True,
             "no_warnings": True,
+            "retries": 10,
+            "fragment_retries": 15,
+            "file_access_retries": 5,
+            "socket_timeout": 30,
+            "http_chunk_size": 10485760,
+            "retry_sleep_functions": {"fragment": lambda n: min(4 ** (n - 1), 60)},
         }
         if fmt in ("mp3","wav","m4a") or quality == "Audio Only":
             ydl_opts["postprocessors"] = [{
