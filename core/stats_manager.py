@@ -66,3 +66,7 @@ class StatsManager:
         # Reload to ensure we have latest
         self.stats = self._load_json(self.stats_file, self.stats)
         return self.stats
+
+    def clear_history(self):
+        self.history = []
+        self._save_json(self.history_file, self.history)
