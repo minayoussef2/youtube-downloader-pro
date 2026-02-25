@@ -5,15 +5,17 @@ class Settings:
     def __init__(self, config_file="config.json"):
         self.config_file = config_file
         self.defaults = {
-            "theme": "Dark",
-            "language": "English",
-            "download_path": os.path.join(os.path.expanduser("~"), "Downloads", "YTDownloaderPro"),
-            "default_quality": "Best",
-            "default_format": "MP4",
-            "auto_subtitles": False
+            "theme":                "Dark",
+            "language":             "English",
+            "download_path":        os.path.join(os.path.expanduser("~"), "Downloads", "YTDownloaderPro"),
+            "default_quality":      "Best",
+            "default_format":       "MP4",
+            "auto_subtitles":       False,
+            # Multi-connection (IDM-style)
+            "concurrent_fragments": 4,     # parallel fragment downloads
         }
         self.config = self.load()
-        
+
         if not os.path.exists(self.config["download_path"]):
             try:
                 os.makedirs(self.config["download_path"])
@@ -25,11 +27,10 @@ class Settings:
             try:
                 with open(self.config_file, 'r') as f:
                     data = json.load(f)
-                    # Merge with defaults to ensure all keys exist
                     return {**self.defaults, **data}
             except:
-                return self.defaults
-        return self.defaults
+                return self.defaults.copy()
+        return self.defaults.copy()
 
     def save(self):
         with open(self.config_file, 'w') as f:
