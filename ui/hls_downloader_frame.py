@@ -145,6 +145,12 @@ class HLSDownloadItem(ctk.CTkFrame):
 
             ydl_opts = {
                 "quiet": True, "no_warnings": True,
+                "retries": 10,
+                "fragment_retries": 15,
+                "file_access_retries": 5,
+                "socket_timeout": 30,
+                "http_chunk_size": 10485760,
+                "retry_sleep_functions": {"fragment": lambda n: min(4 ** (n - 1), 60)},
                 "allowed_extensions": "ALL",
                 "http_headers": http_headers,
             }
