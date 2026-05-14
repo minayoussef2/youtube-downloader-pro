@@ -1,0 +1,2 @@
+D:\Mina\Antigravity\youtube-downloader-pro\src\bin\Release\net8.0-windows\win-x64\publish\VideoDownloaderPro.pdb
+D:\Mina\Antigravity\youtube-downloader-pro\src\bin\Release\net8.0-windows\win-x64\publish\VideoDownloaderPro.exe
