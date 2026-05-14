@@ -1,28 +1,24 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-*.egg-info/
-.installed.cfg
-*.egg
+# .gitignore for Video Downloader Pro
 
-# App Data
-data/
+# Build folders
+[Bb]in/
+[Oo]bj/
+publish/
+
+# IDE files
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs and user data
+crash_log.txt
+server_log.txt
 config.json
 
-# OS
-.DS_Store
-Thumbs.db
+# Tool binaries (these should be in Releases, not the source code)
+*.exe
+*.dll
+*.pdb
