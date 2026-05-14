@@ -40,17 +40,6 @@ If the app doesn't automatically install the extension for you, follow these ste
 5. Select the **`extension`** folder from the files you downloaded.
 6. **Note:** After installing, refresh your website tabs to enable video detection.
 
-## 🛠️ Build from Source
-Requirements: `.NET 8.0 SDK`.
-
-```powershell
-# Clone the repository
-git clone https://github.com/minayoussef2/video-downloader-pro.git
-
-# Build and Publish
-cd src
-dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:IncludeNativeLibrariesForSelfExtract=true
-```
 
 ## 📝 License
 This project is licensed under the MIT License.
